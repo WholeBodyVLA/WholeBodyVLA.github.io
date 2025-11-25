@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="description"
+        content="The Web of NuExo">
+  <meta name="keywords" content="Humanoid Robot Systems, Loco-manipulation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <meta name="google-site-verification" content="VGdVNUlXN6AZ_wpqNh4hsvLMULoIUrBs2pE6ZBVsb9c" /> -->
+  <title>WholeBodyVLA: Towards Unified Latent VLA for Whole-body Loco-manipulation Control</title>
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+
+  <script src="static/js/jquery-3.7.1.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+
+
+  <style>
+        .navbar-menu {
+            background-color: rgba(128, 128, 128, 0.3);
+        }
+        .hero-video {
+          background-color: black;
+        }
+        .blue-text {
+            color: rgb(25, 106, 226);
+        }
+        .green-text {
+            color: rgb(0, 116, 124);
+        }
+        .yellow-text {
+            color: rgb(202, 138, 0);
+        }
+
+
+</style>
+</head>
+
+
+<body>
+  <section class="hero is-link is-fullheight video" style="overflow: hidden;">
+  <div class="hero-video" style="
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ">
+    <video playsinline autoplay muted loop style="
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    ">
+      <source src="./static/videos/ex-coffe.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div class="hero-video is-hidden-tablet is-inline-block-mobile" style="
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+">
+  <video playsinline autoplay muted loop style="
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  ">
+    <source src="./static/videos/ex-coffe.mp4" type="video/mp4">
+  </video>
+</div>
+  <div class="overlay"></div>
+  <div class="hero-head">
+    <header class="navbar-menu">
+      <div class="container is-size-5" style="max-width: 500px; margin: 0 auto;">
+        <div class="navbar-start" style="flex-grow: 1; justify-content: center; gap: 20px;">
+          <a class="navbar-item" href="#ENvideo" style="justify-content: center;">
+            <span class="icon" style="margin-right:5px;">
+              <img src="./static/images/videologo.svg">
+            </span>
+            <span>Video</span>
+          </a>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title is-1 publication-title is-size-2-mobile" style="font-size: 5rem;">
+        WholeBodyVLA
+      </h1>
+      <h1 class="title is-1 publication-title is-size-5-mobile" style="font-size: 2.8rem;">
+        <small>Towards Unified Latent VLA for Whole-body Loco-manipulation Control</small>
+      </h1>
+    </div>
+  </div>
+
+  <div class="hero-foot">
+    <div class="container has-text-centered">
+      <h1 class="title  is-size-7-mobile" style="font-size: 1.5rem;">
+        ▼ Scroll down the page to find more ▼<br><br>
+      </h1>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <div align="center">
+          <img src="./static/images/teaser.png" alt="Image description" width="100%">
+        </div>  
+        <br> 
+        <!-- <h2 class="subtitle has-text-centered"> -->
+        <h2 class="subtitle">
+          <div class="content has-text-justified">
+            <strong> Overview of WholeBodyVLA. </strong> Introducing WholeBodyVLA, a humanoid system that operates on Agibot X2 robot and
+            performs end-to-end humanoid loco–manipulation in large space for the first time. The proposed
+            system achieves consecutive tasks autonomously, including (a-c) basic bimanual grasping, side-step
+            toward the box, and squatting to place; (d-e) squatting to grasp and lift the box and turning to place
+            the box onto the cart; (f-h) grasping the cart handle, pushing the cart forward, and pushing a load of
+            more than 50 kg.
+          </div>
+        </h2>
+        
+      </div>
+  
+    </div>
+  </section>
+
+
+    <section class="section body">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <h1 class="title is-2" style="text-align: center; padding-bottom: 10px;">Method Overview</h1>
+        <div align="center">
+          <img src="./static/images/method_wbvla.png" alt="Image description" width="100%">
+        </div>  
+        <br> 
+        <!-- <h2 class="subtitle has-text-centered"> -->
+        <h2 class="subtitle">
+          <div class="content has-text-justified">
+            <strong> Pipeline of WholeBodyVLA. </strong>  LAM is pretrained on manipulation and manipulation-
+              aware locomotion videos, yielding unified latent supervision for the VLM. Meanwhile, the LMO
+              RL policy is trained for precise and stable locomotion under disturbances. At runtime, egocentric
+              images and language instructions are encoded by the VLM into latent action tokens, which are
+              decoded (∼ 10 Hz )into (i) dual-arm joint actions and (ii) locomotion commands executed by LMO
+              at 50 Hz, enabling robust whole-body loco–manipulation.
+          </div>
+        </h2>
+        
+      </div>
+  
+    </div>
+  </section>
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-world Demos - WholeBodyVLA</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --success-color: #4cc9f0;
+            --danger-color: #f72585;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --card-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .task-section {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+        
+        .task-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .task-title {
+            color: var(--secondary-color);
+            border-left: 5px solid var(--primary-color);
+            padding-left: 15px;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .subsection-title {
+            color: var(--primary-color);
+            margin: 1.5rem 0 1rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .video-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            background-color: #000;
+        }
+        
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px 12px 0 0;
+        }
+        
+        .video-caption {
+            padding: 1.2rem;
+            text-align: center;
+            font-weight: 500;
+            background-color: rgba(67, 97, 238, 0.03);
+        }
+        
+        .success-badge {
+            background-color: var(--success-color);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .failure-badge {
+            background-color: var(--danger-color);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .method-highlight {
+            background-color: rgba(67, 97, 238, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 2rem 0;
+            }
+            
+            .task-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 页面头部 -->
+    <header class="header text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Real-world Demos</h1>
+            <p class="lead">WholeBodyVLA Performance in Complex Tasks</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Task 1: Bag Packing -->
+        <section class="task-section">
+            <h2 class="task-title">Task 1: Bag Packing</h2>
+            
+            <!-- Success Cases -->
+            <h3 class="subsection-title">
+                <span class="success-badge">
+                    <i class="fas fa-check-circle me-2"></i>Our Success Cases
+                </span>
+            </h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <video playsinline controls loop muted poster="./static/images/1-poster.png">
+                                <source src="./static/videos/1_480p.mov" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="video-caption">WholeBodyVLA (ours)</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <video playsinline controls loop muted poster="./static/images/8-poster.png">
+                                <source src="./static/videos/8_480p.mov" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="video-caption">WholeBodyVLA under visual variation</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Failure Cases -->
+            <h3 class="subsection-title">
+                <span class="failure-badge">
+                    <i class="fas fa-times-circle me-2"></i>Failure Cases of Baseline Methods
+                </span>
+            </h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <video playsinline controls loop muted poster="./static/images/4-poster.png">
+                                <source src="./static/videos/4_480p.mov" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="video-caption">❌ Stumble to stop</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <video playsinline controls loop muted poster="./static/images/7-poster.png">
+                                <source src="./static/videos/7_480p.mov" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="video-caption">❌ Lose balance and kick the box</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Task 2: Box Loading -->
+        <section class="task-section">
+            <h2 class="task-title">Task 2: Box Loading</h2>
+            
+            <!-- Success Cases -->
+            <h3 class="subsection-title">
+                <span class="success-badge">
+                    <i class="fas fa-check-circle me-2"></i>Our Success Cases
+                </span>
+            </h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <video playsinline controls loop muted poster="./static/images/task2_1-poster.png">
+                                <source src="./static/videos/task2_1_480p.mov" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="video-caption">WholeBodyVLA (ours)</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <video playsinline controls loop muted poster="./static/images/task2_4-poster.png">
+                                <source src="./static/videos/task2_4_480p.mov" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="video-caption">WholeBodyVLA under unseen object</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Failure Cases -->
+            <h3 class="subsection-title">
+                <span class="failure-badge">
+                    <i class="fas fa-times-circle me-2"></i>Failure Cases of Baseline Methods
+                </span>
+            </h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <video playsinline controls loop muted poster="./static/images/task2_6-poster.png">
+                                <source src="./static/videos/task2_6_480p.mov" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="video-caption">❌ Stumble to stop</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <video playsinline controls loop muted poster="./static/images/task2_7-poster.png">
+                                <source src="./static/videos/task2_7_480p.mov" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="video-caption">❌ Lose balance and deviate greatly from the intended direction</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Task 3: Cart Pushing -->
+        <section class="task-section">
+            <h2 class="task-title">Task 3: Cart Pushing</h2>
+            
+            <!-- Success Cases -->
+            <h3 class="subsection-title">
+                <span class="success-badge">
+                    <i class="fas fa-check-circle me-2"></i>Our Success Cases
+                </span>
+            </h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <video playsinline controls loop muted poster="./static/images/task3_1-poster.png">
+                                <source src="./static/videos/task3_1_480p.mov" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="video-caption">WholeBodyVLA (ours)</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <video playsinline controls loop muted poster="./static/images/task3_8-poster.png">
+                                <source src="./static/videos/task3_8_480p.mov" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="video-caption">WholeBodyVLA under unseen heavy load</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Failure Cases -->
+            <h3 class="subsection-title">
+                <span class="failure-badge">
+                    <i class="fas fa-times-circle me-2"></i>Failure Cases of Baseline Methods
+                </span>
+            </h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <video playsinline controls loop muted poster="./static/images/task3_2-poster.png">
+                                <source src="./static/videos/task3_2_480p.mov" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="video-caption">❌ Deviate from the right direction</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <video playsinline controls loop muted poster="./static/images/task3_7-poster.png">
+                                <source src="./static/videos/task3_7_480p.mov" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="video-caption">❌ Stop too late</div>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiments on Robot Generalization and Capability Showcases</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-bg: #f8f9fa;
+            --dark-bg: #343a40;
+            --border-radius: 10px;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            color: var(--secondary-color);
+            border-left: 5px solid var(--primary-color);
+            padding-left: 15px;
+            margin: 2.5rem 0 1.5rem;
+            font-weight: 700;
+        }
+        
+        .subsection-title {
+            color: var(--primary-color);
+            margin: 1.8rem 0 1rem;
+            font-weight: 600;
+        }
+        
+        .video-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            background-color: #000;
+        }
+        
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+        
+        .video-caption {
+            padding: 1rem;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .grid-section {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        }
+        
+        .badge-category {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+        
+        .footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+        
+        .experiment-highlight {
+            border-left: 4px solid var(--accent-color);
+            background-color: rgba(231, 76, 60, 0.05);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 2rem 0;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+   
+    <header class="header text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Experiments on Robot Generalization and Capability Showcases
+
+</h1>
+            <p class="lead">Adaptability & Scalability</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <section class="mb-5">
+            <h2 class="section-title">Generalization Experiments</h2>
+            
+          
+            <div class="grid-section">
+                <h3 class="subsection-title">1. Object Generalization</h3>
+                <div class="row">
+                    <div class="col-md-8 mx-auto">
+                        <div class="video-card">
+                            <div class="video-container">
+                                <video playsinline controls loop muted poster="./static/images/intervene-poster.jpg">
+                                    <source src="./static/videos/intervene.mp4" type="video/mp4">
+                                    Video format not supported.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+         
+            <div class="grid-section">
+                <h3 class="subsection-title">2. Terrian Generalization</h3>
+                <div class="row">
+                    <div class="col-md-8 mx-auto">
+                        <div class="video-card">
+                            <div class="video-container">
+                                <video playsinline controls loop muted poster="./static/images/terrain-poster.jpg">
+                                    <source src="./static/videos/terrian.mp4" type="video/mp4">
+                                    Video format not supported.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        
+            <div class="grid-section">
+                <h3 class="subsection-title">3. Distance Generalization</h3>
+                
+             
+                <h4 class="mt-4">Distance X-Axis</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="video-card">
+                            <div class="video-container">
+                                <video playsinline controls loop muted poster="./static/images/head1-poster.jpg">
+                                    <source src="./static/videos/head1.mp4" type="video/mp4">
+                                    Video format not supported.
+                                </video>
+                            </div>
+                            <div class="video-caption">X-axis Distance Generalization Experiment 1</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="video-card">
+                            <div class="video-container">
+                                <video playsinline controls loop muted poster="./static/images/head2-poster.jpg">
+                                    <source src="./static/videos/head2.mp4" type="video/mp4">
+                                    Video format not supported.
+                                </video>
+                            </div>
+                            <div class="video-caption">X-axis Distance Generalization Experiment 2 (w/ unseen table color)</div>
+                        </div>
+                    </div>
+                </div>
+                
+             
+                <h4 class="mt-4">Distance Y-Axis</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="video-card">
+                            <div class="video-container">
+                                <video playsinline controls loop muted poster="./static/images/sidestep1-poster.jpg">
+                                    <source src="./static/videos/sidestep1.mp4" type="video/mp4">
+                                    Video format not supported.
+                                </video>
+                            </div>
+                            <div class="video-caption">Y-axis Distance Generalization Experiment 1</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="video-card">
+                            <div class="video-container">
+                                <video playsinline controls loop muted poster="./static/images/sidestep2-poster.jpg">
+                                    <source src="./static/videos/sidestep2.mp4" type="video/mp4">
+                                    Video format not supported.
+                                </video>
+                            </div>
+                            <div class="video-caption">Y-axis Distance Generalization Experiment 2 (w/ unseen table color)</div>
+                        </div>
+                    </div>
+                </div>
+                
+              
+                <h4 class="mt-4">Orientation</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="video-card">
+                            <div class="video-container">
+                                <video playsinline controls loop muted poster="./static/images/turn1-poster.jpg">
+                                    <source src="./static/videos/turn1.mp4" type="video/mp4">
+                                    Video format not supported.
+                                </video>
+                            </div>
+                            <div class="video-caption">Orientation Generalization Experiment 1</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="video-card">
+                            <div class="video-container">
+                                <video playsinline controls loop muted poster="./static/images/turn2-poster.jpg">
+                                    <source src="./static/videos/turn2.mp4" type="video/mp4">
+                                    Video format not supported.
+                                </video>
+                            </div>
+                            <div class="video-caption">Orientation Generalization Experiment 2 (w/ unseen table color)</div>
+                        </div>
+                    </div>
+                </div>
+                
+               
+                <h4 class="mt-4">Height</h4>
+                <div class="row">
+                    <div class="col-md-6 mx-auto">
+                        <div class="video-card">
+                            <div class="video-container">
+                                <video playsinline controls loop muted poster="./static/images/squat-poster.jpg">
+                                    <source src="./static/videos/squat.mp4" type="video/mp4">
+                                    Video format not supported.
+                                </video>
+                            </div>
+                            <div class="video-caption">Height Generalization Experiment</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+
+        <section class="mb-5">
+            <h2 class="section-title">Navigation Capabilities</h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <video playsinline controls loop muted poster="./static/images/navi-poster.jpg">
+                                <source src="./static/videos/navi.mp4" type="video/mp4">
+                                Video format not supported.
+                            </video>
+                        </div>
+                        <div class="video-caption">Visual Navigation, Sign Following</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <video playsinline controls loop muted poster="./static/images/goaround-poster.jpg">
+                                <source src="./static/videos/goaround.mp4" type="video/mp4">
+                                Video format not supported.
+                            </video>
+                        </div>
+                        <div class="video-caption">Obstacle Avoidance</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+
+        <section class="mb-5">
+            <h2 class="section-title">Long-Horizon Bimanual Manipulation</h2>
+            
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <video playsinline controls loop muted poster="./static/images/long-poster.jpg">
+                                <source src="./static/videos/long.mp4" type="video/mp4">
+                                Video format not supported.
+                            </video>
+                        </div>
+                        <div class="video-caption">Long-Horizon Bimanual Manipulation with Coordination</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+
+        <section class="mb-5">
+            <h2 class="section-title">What's More</h2>
+            
+            <div class="experiment-highlight">
+                <p class="mb-0">These experiments demonstrate the system's ability to scale under non-standard conditions..</p>
+            </div>
+            
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <video playsinline controls loop muted poster="./static/videos/ex-chair.mp4">
+                                <source src="./static/videos/ex-chair.mp4" type="video/mp4">
+                                Video format not supported.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <video playsinline controls loop muted poster="./static/videos/ex-clean.mp4">
+                                <source src="./static/videos/ex-clean.mp4" type="video/mp4">
+                                Video format not supported.
+                            </video>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <video playsinline controls loop muted poster="./static/videos/ex-coffe.mp4">
+                                <source src="./static/videos/ex-coffe.mp4" type="video/mp4">
+                                Video format not supported.
+                            </video>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <video playsinline controls loop muted poster="./static/videos/ex-stair.mp4">
+                                <source src="./static/videos/ex-stair.mp4" type="video/mp4">
+                                Video format not supported.
+                            </video>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <video playsinline controls loop muted poster="./static/videos/ex-water.mp4">
+                                <source src="./static/videos/ex-water.mp4" type="video/mp4">
+                                Video format not supported.
+                            </video>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0">Real-world Demos &copy; 2025 | WholeBodyVLA Research</p>
+        </div>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+
+
+</html>
