@@ -10,7 +10,7 @@
 
   <!-- Stylesheets -->
   <!-- 使用新 favicon，并加版本号避免浏览器缓存 -->
-  <link rel="icon" type="image/png" href="./static/images/web_icon2.png?v=1">
+  <link rel="icon" type="image/png" href="./static/images/web_icon3.png?v=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
@@ -339,11 +339,11 @@
     font-weight: 800;
     letter-spacing: 0.05em;
     text-transform: none;
-
-    color: #ffffff;
-    background: rgba(110, 150, 255, 0.85); /* 非常明显 */
-    border-left: 4px solid #ffffff;
-    border-radius: 3px;
+    /* 顶层标题与子项风格更接近：浅色背景 + 蓝色文字 */
+    color: #4361ee;
+    background: rgba(67, 97, 238, 0.06);
+    border-left: 3px solid rgba(67, 97, 238, 0.35);
+    border-radius: 4px;
   }
 
   nav.left-nav .left-nav-subitem {
@@ -371,6 +371,14 @@
     padding: 1px 4px;
     border-radius: 3px;
     transition: 0.12s ease;
+  }
+
+  /* 导航里括号及 reviewer 编号：整体比主标题更小一号 */
+  nav.left-nav .left-nav-reviewers {
+    font-size: 8px;
+    margin-left: 0;
+    color: #a5a5a5; /* 括号和逗号为浅灰色，编号颜色由各自类覆盖 */
+    opacity: 0.9;   /* 整体稍微再淡一点 */
   }
 
   /* 选中状态下的子项：文字改为白色，保证对比度 */
@@ -415,29 +423,68 @@
   </div>
 
   <ul class="left-nav-menu">
+    <!-- Method Overview -->
+    <li class="left-nav-heading">
+      <a href="#method" class="left-nav-link">
+        Method Overview
+      </a>
+    </li>
 
-    <li class="left-nav-heading">Reviewer C1fR</li>
-    <li class="left-nav-subitem"><a href="#obj-gen" class="left-nav-link">Object Generalization (W2 Q2 S2)</a></li>
-    <li class="left-nav-subitem"><a href="#dist-gen" class="left-nav-link">Start-Pose Generalization (W2 Q2 S2)</a></li>
-    <li class="left-nav-subitem"><a href="#terrain-gen" class="left-nav-link">Terrain Generalization (W2 Q2 S2)</a></li>
-    <li class="left-nav-subitem"><a href="#nav-cap" class="left-nav-link">Navigation (W2 Q2 S2)</a></li>
-    <li class="left-nav-subitem"><a href="#long-horizon" class="left-nav-link">Long-Horizon (W2 Q2 S2)</a></li>
-    <li class="left-nav-subitem"><a href="#whats-more" class="left-nav-link">More Tasks (W2 Q2 S2)</a></li>
+    <!-- Real-world Demos（该部分没有特定 reviewer） -->
+    <li class="left-nav-heading">
+      <a href="#demos" class="left-nav-link">
+        Real-world Demos
+      </a>
+    </li>
 
-    <li class="left-nav-heading">Reviewer N1iB</li>
-    <li class="left-nav-subitem"><a href="#dist-gen" class="left-nav-link">Start-Pose Generalization (W1 Q1)</a></li>
-    <li class="left-nav-subitem"><a href="#terrain-gen" class="left-nav-link">Terrain Generalization (Q4)</a></li>
-    <li class="left-nav-subitem"><a href="#long-horizon" class="left-nav-link">Long-Horizon (Q4)</a></li>
-    <li class="left-nav-subitem"><a href="#whats-more" class="left-nav-link">More Tasks (Q4)</a></li>
+    <!-- Generalization -->
+    <li class="left-nav-heading">
+      <a href="#generalization" class="left-nav-link">
+        Generalization
+      </a>
+    </li>
+    <li class="left-nav-subitem">
+      <a href="#obj-gen" class="left-nav-link">
+        Object Generalization
+        <span class="left-nav-reviewers">(<span class="reviewer-c1fr">C1fR</span>, <span class="reviewer-76f3">76f3</span>)</span>
+      </a>
+    </li>
+    <li class="left-nav-subitem">
+      <a href="#dist-gen" class="left-nav-link">
+        Start-Pose Generalization
+        <span class="left-nav-reviewers">(<span class="reviewer-c1fr">C1fR</span>, <span class="reviewer-n1ib">N1iB</span>)</span>
+      </a>
+    </li>
+    <li class="left-nav-subitem">
+      <a href="#terrain-gen" class="left-nav-link">
+        Terrain Generalization
+        <span class="left-nav-reviewers">(<span class="reviewer-c1fr">C1fR</span>, <span class="reviewer-n1ib">N1iB</span>, <span class="reviewer-1asv">1asV</span>)</span>
+      </a>
+    </li>
 
-    <li class="left-nav-heading">Reviewer 76f3</li>
-    <li class="left-nav-subitem"><a href="#obj-gen" class="left-nav-link">Object Generalization (W1)</a></li>
-    <li class="left-nav-subitem"><a href="#whats-more" class="left-nav-link">More Tasks (W1 W2)</a></li>
+    <!-- Navigation Capabilities -->
+    <li class="left-nav-heading">
+      <a href="#navigation" class="left-nav-link">
+        Navigation
+        <span class="left-nav-reviewers">(<span class="reviewer-c1fr">C1fR</span>)</span>
+      </a>
+    </li>
 
-    <li class="left-nav-heading">Reviewer 1asV</li>
-    <li class="left-nav-subitem"><a href="#terrain-gen" class="left-nav-link">Terrain Generalization (W2)</a></li>
-    <li class="left-nav-subitem"><a href="#long-horizon" class="left-nav-link">Long-Horizon (W2 W3)</a></li>
-    <li class="left-nav-subitem"><a href="#whats-more" class="left-nav-link">More Tasks (W2)</a></li>
+    <!-- Long-Horizon -->
+    <li class="left-nav-heading">
+      <a href="#manipulation" class="left-nav-link">
+        Long-Horizon
+        <span class="left-nav-reviewers">(<span class="reviewer-c1fr">C1fR</span>, <span class="reviewer-n1ib">N1iB</span>, <span class="reviewer-1asv">1asV</span>)</span>
+      </a>
+    </li>
+
+    <!-- What's More -->
+    <li class="left-nav-heading">
+      <a href="#more" class="left-nav-link">
+        What's More
+        <span class="left-nav-reviewers">(<span class="reviewer-c1fr">C1fR</span>, <span class="reviewer-n1ib">N1iB</span>, <span class="reviewer-76f3">76f3</span>, <span class="reviewer-1asv">1asV</span>)</span>
+      </a>
+    </li>
   </ul>
 </nav>
 
@@ -1090,6 +1137,13 @@
               behavior: 'smooth',
               block: 'start'
             });
+
+            // 同时更新地址栏 hash，但不触发页面刷新
+            if (history && history.pushState) {
+              history.pushState(null, '', targetId);
+            } else {
+              window.location.hash = targetId;
+            }
           } else {
             // 兜底：如果没找到元素，就直接修改 hash，交给浏览器处理
             window.location.hash = targetId;
