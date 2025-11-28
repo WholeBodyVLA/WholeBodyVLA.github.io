@@ -9,6 +9,8 @@
   <title>WholeBodyVLA: Towards Unified Latent VLA for Whole-body Loco-manipulation Control</title>
 
   <!-- Stylesheets -->
+  <!-- 先暂时使用原来的 icon，如果之后有新设计再替换 -->
+  <link rel="icon" type="image/png" href="./static/images/web_icon.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
@@ -224,6 +226,57 @@
       padding-left: 15px;
       margin: 2.5rem 0 1.5rem;
       font-weight: 700;
+    }
+    
+    /* 可点击锚点标题样式 */
+    .anchor-heading {
+      position: relative;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block; /* 使下划线宽度只覆盖文字而不是整行 */
+      transition: color 0.2s ease;
+    }
+
+    .anchor-heading::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background-color: currentColor;
+      transition: width 0.2s ease;
+    }
+
+    .anchor-heading:hover::after {
+      width: 100%;
+    }
+
+    .anchor-heading:hover {
+      /* 使用比 primary 更浅的蓝色，保证深蓝/浅蓝标题都有明显变化 */
+      color: #6ea8ff;
+    }
+
+    /* 复制提示气泡 */
+    .copy-anchor-toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: rgba(33, 37, 41, 0.92);
+      color: #ffffff;
+      font-size: 0.9rem;
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .copy-anchor-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
     }
     
     .grid-section {
@@ -1041,6 +1094,82 @@
           if (link.getAttribute('href') === '#' + currentSection) {
             link.classList.add('active');
           }
+        });
+      });
+
+      // =========================
+      // 标题锚点复制功能
+      // =========================
+      const anchorHeadings = document.querySelectorAll(
+        'section#method h1.title, h1.display-4, h2.section-title, h2.task-title, h3.subsection-title#obj-gen, h3.subsection-title#dist-gen, h3.subsection-title#terrain-gen'
+      );
+
+      let copyToast = null;
+      let copyToastTimer = null;
+
+      function showCopyToast(message) {
+        if (!copyToast) {
+          copyToast = document.createElement('div');
+          copyToast.className = 'copy-anchor-toast';
+          document.body.appendChild(copyToast);
+        }
+
+        copyToast.textContent = message || '已复制当前段落链接';
+        copyToast.classList.add('show');
+
+        if (copyToastTimer) {
+          clearTimeout(copyToastTimer);
+        }
+
+        copyToastTimer = setTimeout(function() {
+          copyToast.classList.remove('show');
+        }, 1600);
+      }
+
+      anchorHeadings.forEach(function(heading) {
+        // 优先使用标题自身的 id，否则回退到最近的 section[id]
+        var anchorId = heading.getAttribute('id');
+        if (!anchorId) {
+          var parentSection = heading.closest('section[id]');
+          if (parentSection) {
+            anchorId = parentSection.id;
+          }
+        }
+
+        if (!anchorId) {
+          return; // 找不到现有锚点就不处理，确保不新建或修改任何链接
+        }
+
+        heading.classList.add('anchor-heading');
+
+        heading.addEventListener('click', function() {
+          // 先滚动到对应锚点位置（和左侧目录一样的效果）
+          var targetElement = document.getElementById(anchorId) || document.querySelector('[id="' + anchorId + '"]');
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+
+          var baseUrl = window.location.origin + window.location.pathname;
+          var fullUrl = baseUrl + '#' + anchorId;
+
+          // 尽量复制到剪贴板（旧浏览器失败也不会报错）
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(fullUrl).catch(function() {
+              // 忽略错误，至少还能更新地址栏的 hash
+            });
+          }
+
+          // 更新地址栏 hash，方便用户刷新后直接定位
+          if (history.replaceState) {
+            history.replaceState(null, '', '#' + anchorId);
+          } else {
+            window.location.hash = anchorId;
+          }
+
+          showCopyToast('已复制当前段落链接');
         });
       });
     });
