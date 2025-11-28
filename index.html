@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -273,37 +274,97 @@
 
 <body>
   <!-- Left Navigation Bar -->
-  <nav class="left-nav" id="leftNav">
-    <div class="left-nav-toggle" id="navToggle">
-      <i class="fas fa-chevron-right" id="toggleIcon"></i>
-    </div>
-    <ul class="left-nav-menu">
-      <li class="left-nav-item">
-        <a href="#home" class="left-nav-link active">Home</a>
-      </li>
-      <li class="left-nav-item">
-        <a href="#teaser" class="left-nav-link">Overview</a>
-      </li>
-      <li class="left-nav-item">
-        <a href="#method" class="left-nav-link">Method</a>
-      </li>
-      <li class="left-nav-item">
-        <a href="#demos" class="left-nav-link">Real-world Demos</a>
-      </li>
-      <li class="left-nav-item">
-        <a href="#generalization" class="left-nav-link">Generalizability (new) </a>
-      </li>
-      <li class="left-nav-item">
-        <a href="#navigation" class="left-nav-link">Visual Navigation (new)</a>
-      </li>
-      <li class="left-nav-item">
-        <a href="#manipulation" class="left-nav-link">Long-Horizon Manipulation (new)</a>
-      </li>
-      <li class="left-nav-item">
-        <a href="#more" class="left-nav-link">Challenging Tasks (new)</a>
-      </li>
-    </ul>
-  </nav>
+<style>
+  /* 超明显测试：你应该立刻看到 Reviewer 背景变蓝 */
+  nav.left-nav .left-nav-heading {
+    margin-top: 14px;
+    margin-bottom: 4px;
+    padding: 4px 6px;
+
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: none;
+
+    color: #ffffff;
+    background: rgba(110, 150, 255, 0.85); /* 非常明显 */
+    border-left: 4px solid #ffffff;
+    border-radius: 3px;
+  }
+
+  nav.left-nav .left-nav-subitem {
+    padding-left: 16px;
+    margin: 2px 0;
+    position: relative;
+  }
+
+  nav.left-nav .left-nav-subitem::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 7px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(200, 210, 255, 0.4);
+  }
+
+  nav.left-nav .left-nav-link {
+    display: block;
+    font-size: 11px;
+    color: #666666; /* 子项改为更清晰的浅灰色 */
+    text-decoration: none;
+    padding: 1px 4px;
+    border-radius: 3px;
+    transition: 0.12s ease;
+  }
+
+  /* 选中状态下的子项：文字改为白色，保证对比度 */
+  nav.left-nav .left-nav-link.active {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  nav.left-nav .left-nav-link:hover {
+    background: rgba(110, 150, 255, 0.25);
+    color: #ffffff;
+    transform: translateX(2px);
+  }
+</style>
+
+<nav class="left-nav" id="leftNav">
+  <div class="left-nav-toggle" id="navToggle">
+    <i class="fas fa-chevron-right" id="toggleIcon"></i>
+  </div>
+
+  <ul class="left-nav-menu">
+
+    <li class="left-nav-heading">Reviewer C1fR</li>
+    <li class="left-nav-subitem"><a href="#obj-gen" class="left-nav-link">Object Generalization (W2 Q2 S2)</a></li>
+    <li class="left-nav-subitem"><a href="#dist-gen" class="left-nav-link">Start-Pose Generalization (W2 Q2 S2)</a></li>
+    <li class="left-nav-subitem"><a href="#terrain-gen" class="left-nav-link">Terrain Generalization (W2 Q2 S2)</a></li>
+    <li class="left-nav-subitem"><a href="#nav-cap" class="left-nav-link">Navigation (W2 Q2 S2)</a></li>
+    <li class="left-nav-subitem"><a href="#long-horizon" class="left-nav-link">Long-Horizon (W2 Q2 S2)</a></li>
+    <li class="left-nav-subitem"><a href="#whats-more" class="left-nav-link">More Tasks (W2 Q2 S2)</a></li>
+
+    <li class="left-nav-heading">Reviewer N1iB</li>
+    <li class="left-nav-subitem"><a href="#dist-gen" class="left-nav-link">Start-Pose Generalization (W1 Q1)</a></li>
+    <li class="left-nav-subitem"><a href="#terrain-gen" class="left-nav-link">Terrain Generalization (Q4)</a></li>
+    <li class="left-nav-subitem"><a href="#long-horizon" class="left-nav-link">Long-Horizon (Q4)</a></li>
+    <li class="left-nav-subitem"><a href="#whats-more" class="left-nav-link">More Tasks (Q4)</a></li>
+
+    <li class="left-nav-heading">Reviewer 76f3</li>
+    <li class="left-nav-subitem"><a href="#obj-gen" class="left-nav-link">Object Generalization (W1)</a></li>
+    <li class="left-nav-subitem"><a href="#whats-more" class="left-nav-link">More Tasks (W1 W2)</a></li>
+
+    <li class="left-nav-heading">Reviewer 1asV</li>
+    <li class="left-nav-subitem"><a href="#terrain-gen" class="left-nav-link">Terrain Generalization (W2)</a></li>
+    <li class="left-nav-subitem"><a href="#long-horizon" class="left-nav-link">Long-Horizon (W2 W3)</a></li>
+    <li class="left-nav-subitem"><a href="#whats-more" class="left-nav-link">More Tasks (W2)</a></li>
+  </ul>
+</nav>
+
 
   <!-- Hero Section -->
   <section class="hero is-link is-fullheight video" id="home" style="overflow: hidden;">
@@ -654,7 +715,7 @@
         <h2 class="section-title">Generalization Experiments</h2>
         
         <div class="grid-section">
-          <h3 class="subsection-title">1. Object Generalization</h3>
+          <h3 class="subsection-title" id="obj-gen">1. Object Generalization</h3>
           <div class="row">
             <div class="col-md-8 mx-auto">
               <div class="video-card">
@@ -671,7 +732,7 @@
         
         
         <div class="grid-section">
-          <h3 class="subsection-title">2. Start-Pose Generalization</h3>
+          <h3 class="subsection-title" id="dist-gen">2. Start-Pose Generalization</h3>
           
           <h4 class="mt-4">Distance X-Axis</h4>
           <div class="row">
@@ -768,7 +829,7 @@
         </div>
 
         <div class="grid-section">
-          <h3 class="subsection-title">3. Terrian Generalization</h3>
+          <h3 class="subsection-title" id="terrain-gen">3. Terrian Generalization</h3>
           <div class="row">
             <div class="col-md-8 mx-auto">
               <div class="video-card">
@@ -791,7 +852,7 @@
   <section id="navigation">
     <div class="container">
       <section class="mb-5">
-        <h2 class="section-title">Navigation Capabilities</h2>
+        <h2 class="section-title" id="nav-cap">Navigation Capabilities</h2>
         
         <div class="row">
           <div class="col-md-6">
@@ -825,7 +886,7 @@
   <section id="manipulation">
     <div class="container">
       <section class="mb-5">
-        <h2 class="section-title">Long-Horizon Bimanual Manipulation</h2>
+        <h2 class="section-title" id="long-horizon">Long-Horizon Bimanual Manipulation</h2>
         
         <div class="row">
           <div class="col-md-8 mx-auto">
@@ -848,7 +909,7 @@
   <section id="more">
     <div class="container">
       <section class="mb-5">
-        <h2 class="section-title">What's More</h2>
+        <h2 class="section-title" id="whats-more">What's More</h2>
         
         <div class="experiment-highlight">
           <p class="mb-0">These experiments demonstrate the system's ability to scale under non-standard conditions.</p>
@@ -933,23 +994,26 @@
         toggleIcon.classList.toggle('fa-chevron-left');
       });
       
-      // Smooth scrolling for navigation links
+      // Smooth scrolling for navigation links（统一用浏览器默认的定位逻辑）
       navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
           e.preventDefault();
-          
+
           const targetId = this.getAttribute('href');
-          const targetSection = document.querySelector(targetId);
-          
-          if (targetSection) {
-            window.scrollTo({
-              top: targetSection.offsetTop - 20,
-              behavior: 'smooth'
+          const targetElement = document.querySelector(targetId);
+
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
             });
+          } else {
+            // 兜底：如果没找到元素，就直接修改 hash，交给浏览器处理
+            window.location.hash = targetId;
           }
-          
+
           // Update active link
-          navLinks.forEach(link => link.classList.remove('active'));
+          navLinks.forEach(l => l.classList.remove('active'));
           this.classList.add('active');
         });
       });
